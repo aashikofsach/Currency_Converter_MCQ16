@@ -4,7 +4,7 @@ function App() {
 
   return (
     <div>
-      <h1>Currency Converter</h1>
+      <h1 className=''>Currency Converter</h1>
     </div>
   
   )
