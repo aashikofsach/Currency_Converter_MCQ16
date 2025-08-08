@@ -6,6 +6,7 @@ function CurrencyConverter() {
   const [amount, setAmount] = useState(1)
   const [fromCurrencies , setFromCurrencies] = useState("USD");
   const [toCurrencies , setToCurrencies] = useState("INR")
+  const [favourite, setFavourite] = useState([]);
 
   async function fetchCurrencies() {
     try {
@@ -18,6 +19,12 @@ function CurrencyConverter() {
 
 
     }
+
+  }
+
+  function handleFavourite(currency)
+  {
+
 
   }
 
@@ -40,8 +47,8 @@ function CurrencyConverter() {
     <div className='bg-white max-w-xl mx-auto my-10 rounded-lg p-5 shadow-md'>
       <h2 className='mb-5 text-2xl font-semibold text-gray-700'>Currency Converter</h2>
       <div className='text-left'>
-        <Dropdown currencies={currencies} title="From:"/>
-        <Dropdown currencies={currencies} title="To:"/>
+        <Dropdown setCurrency={setFromCurrencies} currencies={currencies} title="From:" handleFavourite={handleFavourite} currency={fromCurrencies}/>
+        <Dropdown setCurrency={setToCurrencies}  currencies={currencies} title="To:" handleFavourite={handleFavourite} currency={toCurrencies}/>
         
 
       </div>
