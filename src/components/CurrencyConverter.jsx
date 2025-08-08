@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Dropdown from './Dropdown';
+import { HiArrowsRightLeft } from 'react-icons/hi2';
 
 function CurrencyConverter() {
   const [currencies, setCurrencies] = useState([]);
@@ -24,7 +25,7 @@ function CurrencyConverter() {
 
   function handleFavourite(currency)
   {
-
+    console.log("jai shree ganesh")
 
   }
 
@@ -32,6 +33,12 @@ function CurrencyConverter() {
   {
     console.log("jai baabe ki ")
 
+  }
+
+  function swapCurrencies()
+  {
+    setFromCurrencies(toCurrencies);
+    setToCurrencies(fromCurrencies)
   }
 
   useEffect(()=>{
@@ -46,8 +53,11 @@ function CurrencyConverter() {
   return (
     <div className='bg-white max-w-xl mx-auto my-10 rounded-lg p-5 shadow-md'>
       <h2 className='mb-5 text-2xl font-semibold text-gray-700'>Currency Converter</h2>
-      <div className='text-left'>
+      <div className='text-left grid grid-cols-1 sm:grid-cols-3 gap-4 place-items-center'>
         <Dropdown setCurrency={setFromCurrencies} currencies={currencies} title="From:" handleFavourite={handleFavourite} currency={fromCurrencies}/>
+        <button onClick={()=> swapCurrencies()} className='mt-4'>
+         <HiArrowsRightLeft className=' w-10 h-10 p-2 bg-gray-200 text-black rounded-full cursor-pointer  hover:bg-gray-300'/>
+        </button >
         <Dropdown setCurrency={setToCurrencies}  currencies={currencies} title="To:" handleFavourite={handleFavourite} currency={toCurrencies}/>
         
 
