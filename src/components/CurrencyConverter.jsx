@@ -8,6 +8,8 @@ function CurrencyConverter() {
   const [fromCurrencies , setFromCurrencies] = useState("USD");
   const [toCurrencies , setToCurrencies] = useState("INR")
   const [favourite, setFavourite] = useState([]);
+  const [converting, setConverting] = useState(false);
+  const [convertingAmount, setConvertingAmount] = useState(null);
 
   async function fetchCurrencies() {
     try {
@@ -29,9 +31,27 @@ function CurrencyConverter() {
 
   }
 
-  function currencyConverter()
+  async function currencyConverter()
   {
-    console.log("jai baabe ki ")
+    try {
+      if(!amount)
+        return 
+      setConverting(true);
+      const res = await fetch(` https://api.frankfurter.dev/v1/latest?amount=${amount}&base=${fromCurrencies}&symbols=${toCurrencies}`);
+      const data = await res.json();
+      // setCurrencies(Object.keys(data))
+      console.log(data.rates[toCurrencies])
+      setConvertingAmount(data.rates[toCurrencies] + " " + toCurrencies)
+      // console.log(convertingAmount)
+
+    } catch (error) {
+      console.log(error)
+
+
+    }finally{
+      setConverting(false)
+    }
+
 
   }
 
@@ -67,11 +87,11 @@ function CurrencyConverter() {
         <input value={amount} onChange={(e) => setAmount(e.target.value)} type="number" className='mt-1 w-full p-2 border-gray-300 border-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500' />
       </div>
       <div className='flex justify-end mt-6'>
-        <button onClick={() => currencyConverter()} className='bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>Convert</button>
+        <button onClick={() => currencyConverter()} className={`bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${converting ? "animate-pulse" : ""}`}>Convert</button>
       </div>
-      <div className='mt-4 text-lg font-medium text-right text-green-600'>
-        Converted Amount : 420 USD
-      </div>
+   { convertingAmount &&  <div className='mt-4 text-lg font-medium text-right text-green-600'>
+     Converted Amount is : {convertingAmount}
+      </div>}
     </div>
   )
 }
